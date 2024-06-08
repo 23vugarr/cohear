@@ -5,8 +5,9 @@ from src.auth import AuthController
 from src.schemas.user import UserRegister, UserLogin
 
 make_sidebar()
+backend_url = "http://localhost:9090"
 
-auth_controller = AuthController("http://localhost:9090")
+auth_controller = AuthController(backend_url)
 
 with st.container():
     register_tab, login_tab = st.tabs(['Register', 'Log in'])
@@ -24,6 +25,7 @@ with st.container():
                 res = auth_controller.register(user)
                 if res:
                     st.session_state.logged_in = True
+                    st.session_state.phoneNumber = user.phoneNumber
                     st.success("Logged in successfully!")
                     sleep(0.5)
                     st.switch_page("pages/dashboard.py")
@@ -40,9 +42,11 @@ with st.container():
             user_login.password = st.text_input('Password', type="password")
             login_button = st.form_submit_button('Login')
             if login_button:
-                res = auth_controller.login(user_login)
+                res, jwt_response = auth_controller.login(user_login)
                 if res:
                     st.session_state.logged_in = True
+                    st.session_state.phoneNumber = int(user_login.phoneNumber)
+                    st.session_state.jwt = jwt_response
                     st.success("Logged in successfully!")
                     sleep(0.5)
                     st.switch_page("pages/dashboard.py")

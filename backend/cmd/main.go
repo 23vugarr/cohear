@@ -24,9 +24,10 @@ func main() {
 		v1.POST("/register", usrHandler.Register(userRepo))
 		v1.POST("/login", usrHandler.Login(userRepo, server.JwtKey))
 
-		i := v1.Group("/inside").Use(middlewares.AuthMiddleware(server.JwtKey))
+		profile := v1.Group("/profile").Use(middlewares.AuthMiddleware(server.JwtKey))
 		{
-			i.GET("/test", usrHandler.Test())
+			profile.GET("/test", usrHandler.Test())
+			profile.POST("/", usrHandler.GetProfileInfo(userRepo))
 		}
 	}
 

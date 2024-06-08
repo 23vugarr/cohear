@@ -2,6 +2,7 @@ package repository
 
 import (
 	"backend/src/models"
+	"backend/src/schemas"
 	"backend/src/utils"
 	"errors"
 	"gorm.io/gorm"
@@ -61,4 +62,18 @@ func (u *UserRepo) LoginUser(phoneNumber int32, password string) error {
 	}
 
 	return nil
+}
+
+func (u *UserRepo) GetProfileInformation(phoneNumber int32) (*schemas.ProfileInfo, error) {
+	var user models.User
+	var res schemas.ProfileInfo
+	err := u.Db.First(&user, "phone_number = ?", phoneNumber).Error
+	if err != nil {
+		return nil, err
+	}
+
+	res.Name = user.Name
+	res.CreatedAt = user.CreatedAt
+	res.Streaks = 2
+	return &res, nil
 }

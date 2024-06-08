@@ -74,3 +74,27 @@ func (u *UserHandler) Login(userRepo *repository.UserRepo, jwtKey []byte) gin.Ha
 		})
 	}
 }
+
+func (u *UserHandler) GetProfileInfo(userRepo *repository.UserRepo) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var res map[string]int32
+		err := json.NewDecoder(c.Request.Body).Decode(&res)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload", "details": err.Error()})
+			log.Println("Error decoding request:", err)
+			return
+		}
+
+		profileInfo, err := userRepo.GetProfileInformation(res["phoneNumber"])
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving profile information", "details": err.Error()})
+			log.Println("Error retrieving profile information:", err)
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"response": "ok",
+			"payload":  profileInfo,
+		})
+	}
+}

@@ -11,5 +11,8 @@ class UserRegister(BaseModel):
     birthday: str
     password: str
     
-
+class ProfileInfo(BaseModel):
+    name: str
+    createdAt: str
+    streaks: int
 

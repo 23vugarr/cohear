@@ -1,16 +1,21 @@
 import streamlit as st
 from time import sleep
 from navigation import make_sidebar
+from src.profile import ProfileController
+from login import backend_url
 
 make_sidebar()
+
+profileController = ProfileController(backend_url=backend_url)
+pc = profileController.get_profile_info(st.session_state.get("phoneNumber"))
 a = 2
 st.write(
-    """
+    f"""
 #  Your Profile 🤠
-### Name {user_name, user_surname}
-### Account created {create_date}
-### Streaks {current_streak}🔥
-### Longest streaks {longest_streak} 🔥
+### Name {pc.name}
+### Account created {pc.createdAt}
+### Streaks {pc.streaks}🔥
+### Longest streaks 4 🔥
 ### Badges:
 """
 )
