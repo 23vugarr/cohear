@@ -2,7 +2,7 @@ import streamlit as st
 from time import sleep
 from navigation import make_sidebar
 from src.auth import AuthController
-from src.schemas.user import UserRegister
+from src.schemas.user import UserRegister, UserLogin
 
 make_sidebar()
 
@@ -34,11 +34,14 @@ with st.container():
 
     with login_tab:
         with st.form(key='login'):
-            phone_number = st.text_input('Phone number')
-            password = st.text_input('Password', type="password")
+            user_login = UserLogin(password="", phoneNumber=0)
+
+            user_login.phoneNumber = st.text_input('Phone number')
+            user_login.password = st.text_input('Password', type="password")
             login_button = st.form_submit_button('Login')
             if login_button:
-                if phone_number == "0513423101" and password == "a":
+                res = auth_controller.login(user_login)
+                if res:
                     st.session_state.logged_in = True
                     st.success("Logged in successfully!")
                     sleep(0.5)
