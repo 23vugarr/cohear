@@ -37,6 +37,7 @@ func (u *UserHandler) Register(userRepo *repository.UserRepo) gin.HandlerFunc {
 
 		err = userRepo.CreateUser(req.Name, req.Surname, utils.HashPassword(req.Password), req.PhoneNumber, req.Birthday)
 		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"response": "user already registered"})
 			return
 		}
 		c.JSON(http.StatusOK, gin.H{

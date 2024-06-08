@@ -19,6 +19,9 @@ func NewUserRepo(db *gorm.DB) *UserRepo {
 }
 
 func (u *UserRepo) CreateUser(name, surname, password string, phoneNumber int32, birthdate time.Time) error {
+	var check models.User
+
+	// Define the user struct
 	user := models.User{
 		Name:        name,
 		Surname:     surname,
@@ -26,6 +29,18 @@ func (u *UserRepo) CreateUser(name, surname, password string, phoneNumber int32,
 		PhoneNumber: phoneNumber,
 		Password:    password,
 	}
+
+	// Check if a user with the given phone number already exists
+	err := u.Db.First(&check, "phone_number = ?", phoneNumber).Error
+	if err == nil {
+		// User with the phone number already exists
+		return errors.New("user with this phone number already exists")
+	} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+		// An error occurred while querying the database
+		return err
+	}
+
+	// Create the new user
 	res := u.Db.Create(&user)
 	if res.Error != nil {
 		return res.Error
@@ -37,9 +52,9 @@ func (u *UserRepo) CreateUser(name, surname, password string, phoneNumber int32,
 func (u *UserRepo) LoginUser(phoneNumber int32, password string) error {
 	var user models.User
 
-	_ = u.Db.First(&user, "phone_number = ?", phoneNumber)
-	if user.Password == "" {
-		return errors.New("no such user")
+	err := u.Db.First(&user, "phone_number = ?", phoneNumber).Error
+	if err != nil {
+		return err
 	}
 	res := utils.CheckPasswordHash(password, user.Password)
 	if !res {
