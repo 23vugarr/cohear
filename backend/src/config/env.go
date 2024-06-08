@@ -8,6 +8,7 @@ import (
 type Env struct {
 	AppUrl      string
 	DatabaseUrl string
+	JwtSecret   string
 }
 
 func NewEnv() *Env {
@@ -19,5 +20,6 @@ func NewEnv() *Env {
 	return &Env{
 		AppUrl:      os.Getenv("APP_URL"),
 		DatabaseUrl: os.Getenv("DATABASE_URL"),
+		JwtSecret:   os.Getenv("JWT_SECRET"),
 	}
 }

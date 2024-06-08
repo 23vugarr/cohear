@@ -22,9 +22,9 @@ func main() {
 	v1 := server.Router.Group("api/v1")
 	{
 		v1.POST("/register", usrHandler.Register(userRepo))
-		v1.POST("/login", usrHandler.Login(userRepo))
+		v1.POST("/login", usrHandler.Login(userRepo, server.JwtKey))
 
-		i := v1.Group("/inside").Use(middlewares.AuthMiddleware())
+		i := v1.Group("/inside").Use(middlewares.AuthMiddleware(server.JwtKey))
 		{
 			i.GET("/test", usrHandler.Test())
 		}

@@ -5,7 +5,6 @@ import (
 	"backend/src/utils"
 	"errors"
 	"gorm.io/gorm"
-	"time"
 )
 
 type UserRepo struct {
@@ -18,7 +17,7 @@ func NewUserRepo(db *gorm.DB) *UserRepo {
 	}
 }
 
-func (u *UserRepo) CreateUser(name, surname, password string, phoneNumber int32, birthdate time.Time) error {
+func (u *UserRepo) CreateUser(name, surname, password string, phoneNumber int32, birthdate string) error {
 	var check models.User
 
 	// Define the user struct

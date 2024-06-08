@@ -20,19 +20,16 @@ func CheckPasswordHash(password, hash string) bool {
 	return err == nil
 }
 
-var jwtKey = []byte("testtest")
-
 type Claims struct {
-	Username string `json:"name"`
-	Surname  string `json:"surname"`
+	PhoneNumber string `json:"name"`
 	jwt.StandardClaims
 }
 
 // GenerateJWT generates a new JWT token
-func GenerateJWT(phoneNumber int32) (string, error) {
+func GenerateJWT(phoneNumber int32, jwtKey []byte) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
-		Username: string(phoneNumber),
+		PhoneNumber: string(phoneNumber),
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},
@@ -46,7 +43,7 @@ func GenerateJWT(phoneNumber int32) (string, error) {
 }
 
 // ValidateJWT validates the JWT token
-func ValidateJWT(tokenString string) (*Claims, error) {
+func ValidateJWT(tokenString string, jwtKey []byte) (*Claims, error) {
 	claims := &Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return jwtKey, nil

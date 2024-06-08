@@ -9,6 +9,7 @@ type Server struct {
 	AppUrl string
 	Db     *Database
 	Router *gin.Engine
+	JwtKey []byte
 }
 
 func NewServer() (*Server, error) {
@@ -30,6 +31,7 @@ func NewServer() (*Server, error) {
 		AppUrl: env.AppUrl,
 		Db:     db,
 		Router: router,
+		JwtKey: []byte(env.JwtSecret),
 	}, nil
 }
 

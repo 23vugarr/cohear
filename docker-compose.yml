@@ -12,14 +12,15 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=app
 
-#  app:
-#    networks:
-#      - medai
-#    build: .
-#    ports:
-#      - "8080:8999"
-#    depends_on:
-#      - postgres
+  app:
+    networks:
+      - medai
+    build:
+      context: ./backend
+    ports:
+      - "8080:8999"
+    depends_on:
+      - postgres
 
 #  frontend:
 #    networks:

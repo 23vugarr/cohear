@@ -46,7 +46,7 @@ func (u *UserHandler) Register(userRepo *repository.UserRepo) gin.HandlerFunc {
 	}
 }
 
-func (u *UserHandler) Login(userRepo *repository.UserRepo) gin.HandlerFunc {
+func (u *UserHandler) Login(userRepo *repository.UserRepo, jwtKey []byte) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req schemas.UserLogin
 
@@ -62,7 +62,7 @@ func (u *UserHandler) Login(userRepo *repository.UserRepo) gin.HandlerFunc {
 			return
 		}
 
-		jwt, _ := utils.GenerateJWT(req.PhoneNumber)
+		jwt, _ := utils.GenerateJWT(req.PhoneNumber, jwtKey)
 
 		c.JSON(http.StatusOK, gin.H{
 			"response": "ok",
