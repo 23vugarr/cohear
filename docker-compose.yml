@@ -18,7 +18,7 @@ services:
     build:
       context: ./backend
     ports:
-      - "8080:8999"
+      - "9090:9090"
     depends_on:
       - postgres
 
