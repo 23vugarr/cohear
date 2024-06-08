@@ -1,1 +1,1 @@
-# Backend application of MedAI
+# Backend application of Cohear
