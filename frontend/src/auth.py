@@ -7,10 +7,8 @@ class AuthController:
         pass
     
     def login(self, data: UserLogin) -> bool:
-        print("login func called")
         data.phoneNumber = int(data.phoneNumber)
         data_dict = data.model_dump()
-        print("hello", data_dict)
 
         response = requests.post(f"{self._backend_url}/api/v1/login", json=data_dict)
         print(response.json())
@@ -21,6 +19,7 @@ class AuthController:
 
         
     def register(self, data: UserRegister) -> bool:
+        data.phoneNumber = int(data.phoneNumber)
         data_dict = data.model_dump()
 
         response = requests.post(f"{self._backend_url}/api/v1/register", json=data_dict)

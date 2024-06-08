@@ -14,7 +14,7 @@ with st.container():
     with register_tab:
         with st.form(key='register_form'):
             user = UserRegister(name="", surname="", phoneNumber=0, birthday="", password="")
-            user.phoneNumber = int(st.number_input("Phone Number", min_value=100000000))
+            user.phoneNumber = st.text_input("Phone Number")
             user.name = st.text_input("Name")
             user.surname = st.text_input("Surname")
             user.password = st.text_input("Password", type="password")
