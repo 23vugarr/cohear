@@ -9,13 +9,14 @@ make_sidebar()
 profileController = ProfileController(backend_url=backend_url)
 pc = profileController.get_profile_info(st.session_state.get("phoneNumber"))
 a = 2
+# print(type(pc.createdAt))
 st.write(
     f"""
 #  Your Profile 🤠
-### Name {pc.name}
-### Account created {pc.createdAt}
-### Streaks {pc.streaks}🔥
-### Longest streaks 4 🔥
+### Name: {pc.name}
+### Account created: {pc.createdAt.split('T')[0]}
+### Streaks: {pc.streaks}🔥
+### Longest streaks: 4 🔥
 ### Badges:
 """
 )
