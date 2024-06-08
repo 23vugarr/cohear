@@ -7,6 +7,7 @@ import (
 	"backend/src/utils"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
@@ -32,6 +33,7 @@ func (u *UserHandler) Register(userRepo *repository.UserRepo) gin.HandlerFunc {
 		err := json.NewDecoder(c.Request.Body).Decode(&req)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"response": err})
+			log.Println(err)
 			return
 		}
 
