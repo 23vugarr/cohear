@@ -1,20 +1,17 @@
 package config
 
 import (
+	"github.com/gin-gonic/gin"
 	"log"
 )
 
 type Server struct {
-	Db *Database
+	AppUrl string
+	Db     *Database
+	Router *gin.Engine
 }
 
-func NewServer() *Server {
-	return &Server{
-		Db: nil,
-	}
-}
-
-func (s *Server) Run() error {
+func NewServer() (*Server, error) {
 	// loading environment variables
 	env := NewEnv()
 	log.Println("Env variables loaded...")
@@ -22,11 +19,25 @@ func (s *Server) Run() error {
 	// connecting to the database
 	db, err := NewDatabase(env.DatabaseUrl)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	// assigning db to server's db
-	s.Db = db
 	log.Println("Connected to the database...")
+
+	router := gin.Default()
+
+	return &Server{
+		AppUrl: env.AppUrl,
+		Db:     db,
+		Router: router,
+	}, nil
+}
+
+func (s *Server) Run() error {
+	err := s.Router.Run(s.AppUrl)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

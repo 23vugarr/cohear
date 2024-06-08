@@ -1,6 +1,7 @@
 package config
 
 import (
+	"backend/src/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -17,6 +18,10 @@ func NewDatabase(dsn string) (*Database, error) {
 	}
 
 	// conducting orm
+	err = db.AutoMigrate(&models.User{})
+	if err != nil {
+		return nil, err
+	}
 
 	return &Database{
 		Db: db,
