@@ -52,9 +52,9 @@ st.markdown(
 # Define the quiz question and answers
 question = "What is the sound of this ?"
 answers = [
-    {"label": "Bird", "image": "images/bird.jpg", "is_correct": True},
+    {"label": "Bird", "image": "images/bird.jpg", "is_correct": False},
     {"label": "Rain", "image": "images/rain.png", "is_correct": False},
-    {"label": "Siren", "image": "images/siren.jpg", "is_correct": False},
+    {"label": "Siren", "image": "images/siren.jpg", "is_correct": True},
     {"label": "Dog barking", "image": "images/dog.webp", "is_correct": False},
 ]
 
@@ -76,6 +76,7 @@ if st.session_state.quiz_state == 'start':
             with col2:
                 if st.button(answer['label'], key=button_key):
                     if answer['is_correct']:
+                        
                         st.write("Correct!")
                     else:
                         st.write("Incorrect!")
