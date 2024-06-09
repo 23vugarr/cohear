@@ -70,7 +70,7 @@ if st.session_state.quiz_state == 'start':
     for answer in answers:
         button_key = f"button_{answer['label']}"
         with st.container():
-            col1, col2 = st.columns([2, 3])
+            col1, col2 = st.columns([1, 3])
             with col1:
                 st.image(answer['image'], use_column_width=True)
             with col2:

@@ -1,1 +1,1 @@
-# Medai - Your Personal Health Results Interpreter
+# Cohear - Your Personal Assistant to Learn with Fun

@@ -15,9 +15,9 @@ with st.container():
     with register_tab:
         with st.form(key='register_form'):
             user = UserRegister(name="", surname="", phoneNumber=0, birthday="", password="")
-            user.phoneNumber = st.text_input("Phone Number")
             user.name = st.text_input("Name")
             user.surname = st.text_input("Surname")
+            user.phoneNumber = st.text_input("Phone Number")
             user.password = st.text_input("Password", type="password")
             register_button = st.form_submit_button("Register")
             if register_button:

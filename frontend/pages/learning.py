@@ -4,14 +4,14 @@ import streamlit as st
 make_sidebar()
 
 def first_quiz():
-    st.header("1. Match the voice")
+    st.header("1. Listen to the voice of rain")
     st.image('images/rain.png')
     st.audio('images/rain_voice.m4a')
     if st.button("Next"):
         st.session_state.current_quiz = "second_quiz"
 
 def second_quiz():
-    st.header("2. Match the voice")
+    st.header("2. Listen to the voice of bird")
     st.image('images/bird.jpg')
     st.audio('images/bird.weba')
     if st.button("Next"):
